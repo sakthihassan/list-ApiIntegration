@@ -13,7 +13,7 @@ class _MyAppState extends State<MyApp> {
   final dio = Dio();
   List<ListModel> users = [];
 
-  Future<void> fetchList() async {
+  Future<List<ListModel>> fetchList() async {
     try {
       final response = await dio.get("https://jsonplaceholder.typicode.com/users");
       if (response.statusCode == 200) {
@@ -21,7 +21,9 @@ class _MyAppState extends State<MyApp> {
           users = (response.data as List)
               .map((userJson) => ListModel.fromJson(userJson))
               .toList();
+
         });
+        return users;
       } else {
         throw Exception('Failed to load users');
       }
